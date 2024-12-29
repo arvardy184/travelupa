@@ -2,6 +2,7 @@ package com.application.travelupa.components.wisata
 
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -123,21 +124,32 @@ fun TempatItemEditable(
                             text = { Text("Delete") },
                             onClick = {
                                 expanded = false
+                                if (tempat.nama.isNullOrEmpty()) {
+                                    Log.w("TempatItemEditable", "Nama tempat wisata kosong, tidak dapat dihapus")
+                                    return@DropdownMenuItem
+                                }
                                 firestore.collection("tempat_wisata")
                                     .document(tempat.nama)
                                     .delete()
                                     .addOnSuccessListener {
                                         onDelete()
+                                        Toast.makeText(
+                                            context,
+                                            "Tempat wisata berhasil dihapus",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                     .addOnFailureListener { e ->
-                                        Log.w(
-                                            "TempatItemEditable",
-                                            "Error deleting document",
-                                            e
-                                        )
+                                        Toast.makeText(
+                                            context,
+                                            "Gagal menghapus tempat wisata: ${e.message}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        Log.w("TempatItemEditable", "Error deleting document", e)
                                     }
                             }
                         )
+
                     }
                 }
             }

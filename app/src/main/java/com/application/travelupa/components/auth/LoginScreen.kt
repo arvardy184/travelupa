@@ -48,8 +48,8 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit,
     onNavigateToRegister: () -> Unit
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("arvan@gmail.com") }
+    var password by remember { mutableStateOf("123456") }
     var passwordVisible by remember { mutableStateOf(false) }
     var errMessage by remember { mutableStateOf<String?>(null) }
     var isLoading by remember { mutableStateOf(false) }

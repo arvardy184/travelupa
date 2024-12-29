@@ -68,7 +68,9 @@ fun RekomendasiTempatScreen(onBackToLogin: () -> Unit) {
                     ) { tempat ->
                         TempatItemEditable(
                             tempat = tempat,
-                            onDelete = { }
+                            onDelete = {
+
+                            }
                         )
                     }
                 }
