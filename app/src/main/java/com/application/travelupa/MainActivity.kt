@@ -59,12 +59,14 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.application.travelupa.components.nav.AppNavigation
 import com.google.firebase.FirebaseApp
-
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
+        val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
         enableEdgeToEdge()
         setContent {
             TravelupaTheme {
@@ -72,7 +74,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.White
                 ) {
-                    AppNavigation()
+                    AppNavigation(currentUser)
                 }
             }
         }

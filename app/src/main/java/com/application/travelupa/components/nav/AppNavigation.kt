@@ -4,18 +4,36 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.application.travelupa.components.GreetingScreen
 import com.application.travelupa.components.auth.LoginScreen
 import com.application.travelupa.components.auth.RegisterScreen
 import com.application.travelupa.components.wisata.RekomendasiTempatScreen
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(currentUser: FirebaseUser?) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.route
+        startDestination = if(currentUser != null)
+
+   Screen.Greeting.route else Screen.Greeting.route
     ) {
+
+        composable(Screen.Greeting.route){
+            GreetingScreen(
+                onStart = {
+                    navController.navigate(Screen.Login.route){
+                        popUpTo(Screen.Greeting.route){
+                            inclusive = true
+                        }
+
+                    }
+                }
+            )
+        }
         composable(Screen.Login.route) {
             LoginScreen(
                 onLoginSuccess = {
@@ -49,7 +67,13 @@ fun AppNavigation() {
         composable(Screen.RekomendasiTempat.route) {
             RekomendasiTempatScreen(
                 onBackToLogin = {
-                    navController.navigateUp()
+                    FirebaseAuth.getInstance().signOut()
+                    navController.navigate(Screen.Greeting.route){
+                        popUpTo(Screen.RekomendasiTempat.route){
+                            inclusive = true
+                        }
+
+                    }
                 }
             )
         }

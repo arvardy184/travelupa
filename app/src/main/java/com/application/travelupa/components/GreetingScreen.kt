@@ -18,7 +18,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GreetingScreen() {
+fun GreetingScreen(
+    onStart: () -> Unit
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -41,7 +43,7 @@ fun GreetingScreen() {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { /* TODO: Handle click */ },
+                onClick = onStart,
                 modifier = Modifier
                     .width(360.dp)
                     .align(Alignment.CenterHorizontally)
